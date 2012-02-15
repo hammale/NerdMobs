@@ -1,0 +1,7 @@
+name: NerdMob
+main: me.hammale.mob.mob
+version: 1.0
+commands:
+  butcher:
+    description:
+    usage: |
