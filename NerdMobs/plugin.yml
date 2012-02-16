@@ -5,3 +5,6 @@ commands:
   butcher:
     description:
     usage: |
+  spawn:
+    description:
+    usage: |    
