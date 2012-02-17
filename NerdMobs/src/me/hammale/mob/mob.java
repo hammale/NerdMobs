@@ -104,7 +104,7 @@ public class mob extends JavaPlugin {
 						if(isValid(args[0])){
 							String name = args[0].toUpperCase();
 							CreatureType ct = CreatureType.valueOf(name);
-							int num = Integer.parseInt(args[0]);
+							int num = Integer.parseInt(args[1]);
 							for(int i=1;i<=num;i++){
 								w.spawnCreature(l, ct);
 							}							
