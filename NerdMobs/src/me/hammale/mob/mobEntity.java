@@ -1,11 +1,12 @@
 package me.hammale.mob;
 
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
-import org.bukkit.event.entity.EntityListener;
 
 
-public class mobEntity extends EntityListener {
+public class mobEntity implements Listener {
 
 	public mob plugin;
 	
@@ -13,6 +14,7 @@ public class mobEntity extends EntityListener {
     	plugin = instance;
     }
 
+    @EventHandler
     public void onCreatureSpawn(CreatureSpawnEvent e){
     	if(plugin.getStopWorlds().contains(",")){
     		String delims = ",";

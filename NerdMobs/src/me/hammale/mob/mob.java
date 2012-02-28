@@ -13,15 +13,12 @@ import org.bukkit.entity.CreatureType;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
 import org.bukkit.plugin.PluginDescriptionFile;
-import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class mob extends JavaPlugin {
 
 	Logger log = Logger.getLogger("Minecraft");
-	private final mobEntity entity = new mobEntity(this);
 	
 	public boolean active = false;
 	
@@ -31,9 +28,9 @@ public class mob extends JavaPlugin {
 	public void onEnable() {
 		PluginDescriptionFile pdfFile = this.getDescription();
 		log.info("[NerdMob] Version: " + pdfFile.getVersion() + " Enabled!");
-		PluginManager pm = getServer().getPluginManager();
 		loadConfiguration();
-	    pm.registerEvent(Event.Type.CREATURE_SPAWN, entity, Event.Priority.Normal, this);
+		getServer().getPluginManager().registerEvents(new mobEntity(this), this);
+		getServer().getPluginManager().registerEvents(new mobPlayer(this), this);
 	}
 
 	public void loadConfiguration(){
