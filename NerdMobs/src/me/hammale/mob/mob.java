@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.block.BlockFace;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -65,11 +66,33 @@ public class mob extends JavaPlugin {
 			}
 	}
 	
+	@Override
 	  public boolean onCommand(final CommandSender sender, Command cmd, String commandLabel, String[] args){
+		  if(cmd.getName().equalsIgnoreCase("cords")){
+			  if(sender instanceof Player){
+				  Player p = (Player) sender;
+				  int x = (int) p.getLocation().getX();
+				  int y = (int) p.getLocation().getY();
+				  int z = (int) p.getLocation().getZ();	  
+				  p.sendMessage(ChatColor.DARK_PURPLE + "Cords:" + ChatColor.DARK_GREEN + " X:" + ChatColor.BLUE + x + ChatColor.DARK_GREEN + " Y:" + ChatColor.BLUE + y + ChatColor.DARK_GREEN + " Z:" + ChatColor.BLUE + z);
+			  }
+			  return true;
+		  }
 			if(cmd.getName().equalsIgnoreCase("butcher")){
+				if(sender instanceof Player){
+					Player p = (Player) sender;
+					if(!(p.hasPermission("nerdworld.butcher"))){
+						p.sendMessage(ChatColor.RED + "You dont have permission!");
+						return true;
+					}
+				}
 				if(args.length >= 1){
-					World w = getServer().getWorld(args[0]);			
-					sender.sendMessage(ChatColor.GREEN + "Killed " + removeMobs(w) + " mobs in " + args[0]);
+					World w = getServer().getWorld(args[0]);
+					if(w != null){
+						sender.sendMessage(ChatColor.GREEN + "Killed " + removeMobs(w) + " mobs in " + args[0]);
+					}else{
+						sender.sendMessage(ChatColor.RED + "Invalid world!");
+					}
 				}else{
 					if(sender instanceof Player){
 						Player p = (Player) sender;					
@@ -79,18 +102,29 @@ public class mob extends JavaPlugin {
 				}
 			}else if(cmd.getName().equalsIgnoreCase("spawn")){
 				if(args.length == 1){
-					if(sender instanceof Player){
+					if(args[0].equalsIgnoreCase("list")){
+						PluginDescriptionFile pdf = this.getDescription();
+						sender.sendMessage(ChatColor.GOLD + "<---" + ChatColor.BLUE + "NerdMobs Version: " + ChatColor.GREEN + pdf.getVersion() + ChatColor.GOLD + "--->");
+						for(CreatureType ct : CreatureType.values()){
+							sender.sendMessage(ChatColor.RED + ct.toString().toLowerCase());
+						}						
+						return true;
+					}else if(sender instanceof Player){
 						Player p = (Player) sender;
-						World w = p.getWorld();
-						Location l = p.getTargetBlock(null, 300).getLocation();					
-						if(isValid(args[0])){
-							String name = args[0].toUpperCase();
-							CreatureType ct = CreatureType.valueOf(name);
-							sender.sendMessage("Creature: " + ct + " Name: " + name);
-							w.spawnCreature(l, ct);
-							p.sendMessage(ChatColor.LIGHT_PURPLE + "Spawned a " + args[0]);
+						if(p.hasPermission("nerdworld.spawn")){
+							World w = p.getWorld();
+							Location l = p.getTargetBlock(null, 300).getRelative(BlockFace.UP, 1).getLocation();					
+							if(isValid(args[0])){
+								String name = args[0].toUpperCase();
+								CreatureType ct = CreatureType.valueOf(name);
+								sender.sendMessage("Creature: " + ct + " Name: " + name);
+								w.spawnCreature(l, ct);
+								p.sendMessage(ChatColor.LIGHT_PURPLE + "Spawned a " + args[0]);
+							}else{
+								p.sendMessage(ChatColor.RED + "Invalid name! Try /spawn list");
+							}
 						}else{
-							p.sendMessage(ChatColor.RED + "Invalid name! Try /spawn list");
+							p.sendMessage(ChatColor.RED + "You dont have permission!");
 						}
 					}
 				}else if(args.length == 2){

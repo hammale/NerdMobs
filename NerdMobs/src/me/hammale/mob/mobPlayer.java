@@ -44,7 +44,7 @@ public class mobPlayer implements Listener {
 								CreatureType ct = CreatureType.valueOf(mname.toUpperCase());
 								b.getWorld().spawnCreature(loc, ct);
 	    					}
-	    					if(s.getLine(2) != null){
+	    					if(s.getLine(2) != null && (!s.getLine(2).equals(""))){
 		    					String cord = s.getLine(2);
 		    					String delims = ",";
 								String[] cords = cord.split(delims);
@@ -76,7 +76,7 @@ public class mobPlayer implements Listener {
 								CreatureType ct = CreatureType.valueOf(mname.toUpperCase());
 								b.getWorld().spawnCreature(loc, ct);
 	    					}
-	    					if(s.getLine(2) != null){
+	    					if(s.getLine(2) != null && (!s.getLine(2).equals(""))){
 		    					String cord = s.getLine(2);
 		    					String delims = ",";
 								String[] cords = cord.split(delims);
@@ -109,7 +109,7 @@ public class mobPlayer implements Listener {
 								CreatureType ct = CreatureType.valueOf(mname.toUpperCase());
 								b.getWorld().spawnCreature(loc, ct);
 	    					}
-	    					if(s.getLine(2) != null){
+	    					if(s.getLine(2) != null && (!s.getLine(2).equals(""))){
 		    					String cord = s.getLine(2);
 		    					String delims = ",";
 								String[] cords = cord.split(delims);
@@ -141,7 +141,7 @@ public class mobPlayer implements Listener {
 								CreatureType ct = CreatureType.valueOf(mname.toUpperCase());
 								b.getWorld().spawnCreature(loc, ct);
 	    					}
-	    					if(s.getLine(2) != null){
+	    					if(s.getLine(2) != null && (!s.getLine(2).equals(""))){
 		    					String cord = s.getLine(2);
 		    					String delims = ",";
 								String[] cords = cord.split(delims);

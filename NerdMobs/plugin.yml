@@ -2,9 +2,23 @@ name: NerdMob
 main: me.hammale.mob.mob
 version: 1.0
 commands:
+  cords:
+    description:
+    usage: |
   butcher:
     description:
     usage: |
   spawn:
     description:
-    usage: |    
+    usage: |
+permissions:
+    nerdmobs.*:
+        description: Gives access to all NerdMob commands
+        children:
+            nerdmobs.spawn: true
+            nerdmobs.butcher: true
+        default: op    
+    nerdmobs.spawn:
+        description: Allows you to spawn mobs 
+    nerdmobs.butcher:
+        description: Allows you to butcher mobs
